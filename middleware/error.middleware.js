@@ -1,4 +1,4 @@
-export const handlingError = (err, req, res, next) => {
+const handlingError = (err, req, res, next) => {
   let data;
   let httpCode;
   if (err.httpCode) {
@@ -16,6 +16,8 @@ export const handlingError = (err, req, res, next) => {
   res.status(httpCode).json(data);
 };
 
-export const notFoundRouterError = (req, res) => {
+const notFoundRouterError = (req, res) => {
   res.status(404).json({ message: "invalid url" });
 };
+
+module.exports = { handlingError, notFoundRouterError };
