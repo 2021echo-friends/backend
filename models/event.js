@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const EventSchema = new mongoose.Schema({
   post_id: {
@@ -10,4 +10,4 @@ const EventSchema = new mongoose.Schema({
   // is_fcm: { type: Boolean, required: true },
 });
 
-module.exports = mongoose.model("Event", EventSchema);
+export default mongoose.model("Event", EventSchema);

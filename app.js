@@ -1,12 +1,12 @@
-const cors = require("cors");
-const express = require("express");
-const mongoose = require("mongoose");
-const { DBURL } = require("./config");
+import cors from "cors";
+import express from "express";
+import mongoose from "mongoose";
+import { DBURL } from "./config.js";
 // const routers = require("./routers");
-const {
+import {
   handlingError,
   notFoundRouterError,
-} = require("./middleware/error.middleware");
+} from "./middleware/error.middleware.js";
 
 mongoose
   .connect(DBURL, {

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const QuizSchema = new mongoose.Schema({
   pircture_folder_id: {
@@ -10,4 +10,4 @@ const QuizSchema = new mongoose.Schema({
   selections: { type: [String], required: true },
 });
 
-module.exports = mongoose.model("Quiz", QuizSchema);
+export default mongoose.model("Quiz", QuizSchema);

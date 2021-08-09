@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const FileSchema = new mongoose.Schema({
   folder_id: {
@@ -10,4 +10,4 @@ const FileSchema = new mongoose.Schema({
   url: { type: String, required: true },
 });
 
-module.exports = mongoose.model("File", FileSchema);
+export default mongoose.model("File", FileSchema);

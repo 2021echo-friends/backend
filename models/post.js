@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const PostSchema = new mongoose.Schema({
   attachment_folder_id: {
@@ -12,4 +12,4 @@ const PostSchema = new mongoose.Schema({
   body: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+export default mongoose.model("Post", PostSchema);

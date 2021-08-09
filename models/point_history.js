@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const PointHistorySchema = new mongoose.Schema({
   point_id: {
@@ -11,4 +11,4 @@ const PointHistorySchema = new mongoose.Schema({
   eco_value: { type: Number, required: true },
 });
 
-module.exports = mongoose.model("PointHistory", PointHistorySchema);
+export default mongoose.model("PointHistory", PointHistorySchema);

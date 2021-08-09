@@ -1,6 +1,6 @@
-const { StatusCodes } = require("http-status-codes");
+import { StatusCodes } from "http-status-codes";
 
-const handlingError = (err, req, res, next) => {
+export const handlingError = (err, req, res, next) => {
   let data;
   let httpCode;
   if (err.httpCode) {
@@ -20,8 +20,6 @@ const handlingError = (err, req, res, next) => {
   res.status(httpCode).json(data);
 };
 
-const notFoundRouterError = (req, res) => {
+export const notFoundRouterError = (req, res) => {
   res.status(StatusCodes.NOT_FOUND).json({ message: "invalid url" });
 };
-
-module.exports = { handlingError, notFoundRouterError };
