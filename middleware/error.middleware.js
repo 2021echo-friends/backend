@@ -1,3 +1,5 @@
+const { StatusCodes } = require("http-status-codes");
+
 const handlingError = (err, req, res, next) => {
   let data;
   let httpCode;
@@ -5,11 +7,13 @@ const handlingError = (err, req, res, next) => {
     httpCode = err.httpCode;
     data = err.data;
   } else {
-    httpCode = 500;
+    // throw new ErrorFromObject 로 의도되지 않은 에러의 경우
+    httpCode = StatusCodes.INTERNAL_SERVER_ERROR;
     data = {
       success: false,
       data: {},
       error: `${err.message}${err.stack}` || err.name,
+      errorDetails: [],
       message: "알수 없는 오류",
     };
   }
@@ -17,7 +21,7 @@ const handlingError = (err, req, res, next) => {
 };
 
 const notFoundRouterError = (req, res) => {
-  res.status(404).json({ message: "invalid url" });
+  res.status(StatusCodes.NOT_FOUND).json({ message: "invalid url" });
 };
 
 module.exports = { handlingError, notFoundRouterError };
