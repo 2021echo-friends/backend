@@ -10,6 +10,7 @@ const PostSchema = new mongoose.Schema({
     ref: "Folder",
   },
   body: { type: String, required: true },
+  date_create: { type: Date, required: true },
 });
 
 export default mongoose.model("Post", PostSchema);

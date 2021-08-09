@@ -9,6 +9,7 @@ const ProductSchema = new mongoose.Schema({
   },
   price: { type: Number, required: true },
   description: { type: String, required: true },
+  date_create: { type: Date, required: true },
 });
 
 export default mongoose.model("Product", ProductSchema);

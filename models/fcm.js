@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-const EventSchema = new mongoose.Schema({
+const FCMSchema = new mongoose.Schema({
   post_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
     required: true,
   },
   snippet_message: { type: String, required: true },
-  // is_fcm: { type: Boolean, required: true },
+  date_create: { type: Date, required: true },
 });
 
-export default mongoose.model("Event", EventSchema);
+export default mongoose.model("FCM", FCMSchema);
