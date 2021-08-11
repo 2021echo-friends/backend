@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import { DBURL } from "./config.js";
-// const routers = require("./routers");
+const routers = require("./routers");
 import {
   handlingError,
   notFoundRouterError,
@@ -26,7 +26,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-// app.use("/", routers);
+app.use("/", routers);
 app.use(handlingError);
 app.all("*", notFoundRouterError);
 
