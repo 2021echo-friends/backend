@@ -1,4 +1,6 @@
 import User from "../models/user.js";
+import Point from "../models/point.js";
+import EcoEffect from "../models/eco_effect.js";
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
 export const getUser = async (email) => {
@@ -15,4 +17,7 @@ export const getToken = async (email, password) => {
     }
   }
   return null;
+};
+export const createUser = async (email, password, user_type) => {
+  const point = await Point.create({});
 };
