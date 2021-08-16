@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { errorHandler } from "../lib/common";
-import clientRouter from "./client";
-import adminRouter from "./admin";
-import authNonRouter from "./auth.non";
+import { errorHandler } from "../lib/common.js";
+import clientRouter from "./client/index.js";
+import adminRouter from "./admin/index.js";
+import authNonRouter from "./auth.non.js";
 import {
   DecodeMiddleware,
   TokenMiddleware,
   userTypeRequire,
   AuthenticationMiddleware,
-} from "../middleware/user.middleware";
-import { USER_TYPE } from "../lib/enums";
+} from "../middleware/user.middleware.js";
+import { USER_TYPE } from "../lib/enums.js";
 const router = Router();
 
 router.use("/auth-non", authNonRouter);

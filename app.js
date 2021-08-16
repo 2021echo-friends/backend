@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import { DBURL } from "./config.js";
-const routers = require("./routers");
+import routers from "./routers/index.js";
 import {
   handlingError,
   notFoundRouterError,

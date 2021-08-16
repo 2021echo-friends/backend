@@ -1,4 +1,4 @@
-import { StatusCodes } from "http-status-codes";
+import httpStatusCode from "http-status-codes";
 
 export const handlingError = (err, req, res, next) => {
   let data;
@@ -8,7 +8,7 @@ export const handlingError = (err, req, res, next) => {
     data = err.data;
   } else {
     // throw new ErrorFromObject 로 의도되지 않은 에러의 경우
-    httpCode = StatusCodes.INTERNAL_SERVER_ERROR;
+    httpCode = httpStatusCode.StatusCodes.INTERNAL_SERVER_ERROR;
     data = {
       success: false,
       data: {},
@@ -21,5 +21,7 @@ export const handlingError = (err, req, res, next) => {
 };
 
 export const notFoundRouterError = (req, res) => {
-  res.status(StatusCodes.NOT_FOUND).json({ message: "invalid url" });
+  res
+    .status(httpStatusCode.StatusCodes.NOT_FOUND)
+    .json({ message: "invalid url" });
 };

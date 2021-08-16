@@ -2,8 +2,8 @@
 // 카카오 유저(access token 요청으로 email 특정)와 일반 유저(jwt decode 로 토큰 안에 있는 email 특정) 구분
 
 import { StatusCodes } from "http-status-codes";
-import { getUser } from "../controller/user.contoller";
-import { ErrorFromObject } from "../lib/common";
+import { getUser } from "../controller/user.contoller.js";
+import { ErrorFromObject } from "../lib/common.js";
 import jwt, { decode } from "jsonwebtoken";
 import { SECRET } from "../config.js";
 export const TokenMiddleware = (req, res, next) => {
@@ -21,7 +21,7 @@ export const TokenMiddleware = (req, res, next) => {
   next();
 };
 export const DecodeMiddleware = async (req, res, next) => {
-  const decodeToken = await jwt.verify(token, SECRET);
+  const decodeToken = jwt.verify(token, SECRET);
   if (decodeToken.email) {
     req.email = decodeToken.email;
   } else {
@@ -34,7 +34,7 @@ export const DecodeMiddleware = async (req, res, next) => {
   }
   next();
 };
-export const AuthenticationMiddleware = (req, res, next) => {
+export const AuthenticationMiddleware = async (req, res, next) => {
   const user = await getUser(req.email);
   if (user) {
     req.user = user;

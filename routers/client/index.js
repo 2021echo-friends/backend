@@ -1,12 +1,12 @@
 // 라우터 모아서 노출해줌
 import { Router } from "express";
-import fcmRouter from "./fcm";
-import pointRouter from "./point";
-import postRouter from "./post";
-import productRouter from "./product";
-import quizRouter from "./quiz";
-import statisticsRouter from "./statistics";
-import userRouter from "./user";
+import fcmRouter from "./fcm.js";
+import pointRouter from "./point.js";
+import postRouter from "./post.js";
+import productRouter from "./product.js";
+import quizRouter from "./quiz.js";
+import statisticsRouter from "./statistics.js";
+import userRouter from "./user.js";
 
 const router = Router();
 router.use("/fcm", fcmRouter);
