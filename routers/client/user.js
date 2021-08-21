@@ -1,16 +1,18 @@
 // 내정보
 // 내정보 수정
 import { Router } from "express";
-import { inputHandler, responseHandler } from "../../lib/common";
+import { getUserWithOthers } from "../../controller/user.contoller.js";
+import { inputHandler, responseHandler } from "../../lib/common.js";
 
 const router = Router();
-
-router.post(
-  "/join",
+router.get(
+  "/",
   inputHandler({}),
   responseHandler(async (req) => {
-    const { email, password, user_type } = req.body;
+    console.log("user info");
+    const user_id = req.user._id;
+    const others = await getUserWithOthers(user_id);
+    return { ...others, user: req.user };
   })
 );
-
 export default router;

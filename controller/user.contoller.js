@@ -3,6 +3,7 @@ import Point from "../models/point.js";
 import EcoEffect from "../models/eco_effect.js";
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
+import mongoose from "mongoose";
 export const getUser = async (email) => {
   return await User.findOne({ email });
 };
@@ -19,5 +20,25 @@ export const getToken = async (email, password) => {
   return null;
 };
 export const createUser = async (email, password, user_type) => {
-  const point = await Point.create({});
+  const session = await mongoose.startSession();
+  let user;
+  let point;
+  let eco_effect;
+  await session.withTransaction(async () => {
+    user = (
+      await User.create([{ email, password, user_type }], { session })
+    )[0];
+    point = (await Point.create([{ user_id: user._id }], { session }))[0];
+    eco_effect = (
+      await EcoEffect.create([{ user_id: user._id }], { session })
+    )[0];
+  });
+  session.endSession();
+  return { user, point, eco_effect };
+};
+export const getUserWithOthers = async (user_id) => {
+  const point = await Point.findOne({ user_id });
+  const eco_effect = await EcoEffect.findOne({ user_id });
+  // point_history
+  return { point, eco_effect };
 };

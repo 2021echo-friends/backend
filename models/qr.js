@@ -7,8 +7,7 @@ const QrSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  is_used: { type: Boolean, required: true, default:false },
-  id: { type: String, required: true },
+  is_used: { type: Boolean, required: true, default: false },
 });
 
 export default mongoose.model("Qr", QrSchema);

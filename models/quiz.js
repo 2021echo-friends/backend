@@ -8,7 +8,7 @@ const QuizSchema = new mongoose.Schema({
   question: { type: String, required: true },
   answer: { type: String, required: true },
   selections: { type: [String], required: true },
-  date_create: { type: Date, required: true },
+  date_create: { type: Date, required: true, default: Date.now },
 });
 
 export default mongoose.model("Quiz", QuizSchema);

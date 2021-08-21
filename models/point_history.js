@@ -7,9 +7,9 @@ const PointHistorySchema = new mongoose.Schema({
     required: true,
   },
   description: { type: String, required: true },
-  account_value: { type: Number, required: true },
+  point_value: { type: Number, required: true },
   eco_value: { type: Number, required: true },
-  date_create: { type: Date, required: true },
+  date_create: { type: Date, required: true, default: Date.now },
 });
 
 export default mongoose.model("PointHistory", PointHistorySchema);

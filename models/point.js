@@ -6,8 +6,8 @@ const PointSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  account: { type: Number, required: true },
-  date_create: { type: Date, required: true },
+  account: { type: Number, required: true, default: 0 },
+  date_create: { type: Date, required: true, default: Date.now },
 });
 
 export default mongoose.model("Point", PointSchema);

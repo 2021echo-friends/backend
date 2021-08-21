@@ -20,6 +20,14 @@ router.use(errorHandler(TokenMiddleware));
 router.use(errorHandler(DecodeMiddleware));
 router.use(errorHandler(AuthenticationMiddleware));
 
-router.use("/client", userTypeRequire(USER_TYPE.CLIENT), clientRouter);
-router.use("/admin", userTypeRequire(USER_TYPE.ADMIN), adminRouter);
+router.use(
+  "/client",
+  errorHandler(userTypeRequire(USER_TYPE.CLIENT)),
+  clientRouter
+);
+router.use(
+  "/admin",
+  errorHandler(userTypeRequire(USER_TYPE.ADMIN)),
+  adminRouter
+);
 export default router;

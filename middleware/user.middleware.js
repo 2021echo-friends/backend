@@ -6,31 +6,28 @@ import { getUser } from "../controller/user.contoller.js";
 import { ErrorFromObject } from "../lib/common.js";
 import jwt, { decode } from "jsonwebtoken";
 import { SECRET } from "../config.js";
-export const TokenMiddleware = (req, res, next) => {
+export const TokenMiddleware = async (req, res, next) => {
   const authorization = req.get("authorization");
   if (authorization && authorization.toLowerCase().startsWith("bearer ")) {
     req.token = authorization.substring(7);
   } else {
-    next(
-      new ErrorFromObject({
-        httpCode: StatusCodes.BAD_REQUEST,
-        error: "no token",
-      })
-    );
+    throw new ErrorFromObject({
+      httpCode: StatusCodes.BAD_REQUEST,
+      error: "no token",
+    });
   }
   next();
 };
 export const DecodeMiddleware = async (req, res, next) => {
+  const token = req.token;
   const decodeToken = jwt.verify(token, SECRET);
   if (decodeToken.email) {
     req.email = decodeToken.email;
   } else {
-    next(
-      new ErrorFromObject({
-        httpCode: StatusCodes.BAD_REQUEST,
-        error: "empty email in token",
-      })
-    );
+    throw new ErrorFromObject({
+      httpCode: StatusCodes.BAD_REQUEST,
+      error: "empty email in token",
+    });
   }
   next();
 };
@@ -39,24 +36,19 @@ export const AuthenticationMiddleware = async (req, res, next) => {
   if (user) {
     req.user = user;
   } else {
-    next(
-      new ErrorFromObject({
-        httpCode: StatusCodes.BAD_REQUEST,
-        error: "no user",
-      })
-    );
+    throw new ErrorFromObject({
+      httpCode: StatusCodes.BAD_REQUEST,
+      error: "no user",
+    });
   }
   next();
 };
-export const userTypeRequire = (userType) => (req, res, next) => {
-  if (req.userType !== userType) {
-    next(
-      new ErrorFromObject({
-        httpCode: StatusCodes.BAD_REQUEST,
-        error: "wrong user type",
-      })
-    );
+export const userTypeRequire = (userType) => async (req, res, next) => {
+  if (req.user.user_type !== userType) {
+    throw new ErrorFromObject({
+      httpCode: StatusCodes.BAD_REQUEST,
+      error: "wrong user type",
+    });
   }
-
   next();
 };

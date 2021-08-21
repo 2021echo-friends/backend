@@ -7,7 +7,7 @@ const FCMSchema = new mongoose.Schema({
     required: true,
   },
   snippet_message: { type: String, required: true },
-  date_create: { type: Date, required: true },
+  date_create: { type: Date, required: true, default: Date.now },
 });
 
 export default mongoose.model("FCM", FCMSchema);
