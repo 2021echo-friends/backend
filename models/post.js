@@ -9,6 +9,8 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Folder",
   },
+  body_file_counts: { type: Number, default: 1 },
+  attachment_file_counts: { type: Number, default: 1 },
   body: { type: String, required: true },
   date_create: { type: Date, required: true, default: Date.now },
 });

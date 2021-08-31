@@ -4,10 +4,11 @@ const ProductSchema = new mongoose.Schema({
   name: { type: String, required: true },
   thumnail_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Thumnail",
+    ref: "Folder",
     required: false,
     unique: true,
   },
+  file_counts: { type: Number, default: 1 },
   price: { type: Number, required: true },
   description: { type: String, required: true },
   point_value: { type: Number, required: true },
