@@ -105,7 +105,7 @@ router.post(
   upload.array("files"),
   responseHandler(async (req) => {
     console.log(req.files);
-    return req.folder_id;
+    return { folder_id: req.folder_id, counts: req.query.counts };
   })
 );
 router.get(
@@ -122,6 +122,13 @@ router.get(
       ch4 += e.eco_value_ch4;
     });
     return { co2, o3, ch4 };
+  })
+);
+router.get(
+  "/post",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const { cursor, per_page } = req.query;
   })
 );
 export default router;

@@ -3,7 +3,9 @@ import PointHistory from "../models/point_history.js";
 import Qr from "../models/qr.js";
 import Product from "../models/product.js";
 import EcoEffect from "../models/eco_effect.js";
+import Coupon from "../models/coupon.js";
 import mongoose from "mongoose";
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react";
 
 export const createPointHistoryWithOthers = async (qr_id, user_id) => {
   const session = await mongoose.startSession();
@@ -54,7 +56,11 @@ export const createPointHistoryWithOthers = async (qr_id, user_id) => {
     ecoEffect = await EcoEffect.findOneAndUpdate(
       { user_id },
       {
-        $inc: { sum_effect: product.eco_value },
+        $inc: {
+          sum_effect_co2: product.eco_value_co2,
+          sum_effect_o3: product.eco_value_o3,
+          sum_effect_ch4: product.eco_value_ch4,
+        },
       },
       { new: true, session }
     );
@@ -67,4 +73,34 @@ export const createPointHistoryWithOthers = async (qr_id, user_id) => {
     pointHistory,
     ecoEffect,
   };
+};
+
+export const buyProduct = async (product_id, user_id) => {
+  const session = await mongoose.startSession();
+  // point
+  // eco_effect
+  // coupon
+  let coupon;
+  session.withTransaction(async () => {
+    const product = await Product.findById(product_id);
+    await Point.findOneAndUpdate(
+      { user_id },
+      { $inc: { account: -product.point_value } },
+      { session }
+    );
+    await EcoEffect.findOneAndUpdate(
+      { user_id },
+      {
+        $inc: {
+          sum_effect_co2: product.eco_value_co2,
+          sum_effect_o3: product.eco_value_o3,
+          sum_effect_ch4: product.eco_value_ch4,
+        },
+      },
+      { session }
+    );
+    coupon = await Coupon.create([{ product_id }], { session });
+  });
+  session.endSession();
+  return coupon;
 };
