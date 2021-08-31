@@ -19,6 +19,7 @@ import {
 } from "../controller/file.controller.js";
 import mongoose from "mongoose";
 import fs from "fs";
+import { getEcoEffect } from "../controller/statistics.controller.js";
 
 const router = Router();
 router.post(
@@ -105,6 +106,22 @@ router.post(
   responseHandler(async (req) => {
     console.log(req.files);
     return req.folder_id;
+  })
+);
+router.get(
+  "/statistics",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const eco_effects = await getEcoEffect();
+    let co2 = 0,
+      o3 = 0,
+      ch4 = 0;
+    eco_effects.map((e) => {
+      co2 += e.eco_value_co2;
+      o3 += e.eco_value_o3;
+      ch4 += e.eco_value_ch4;
+    });
+    return { co2, o3, ch4 };
   })
 );
 export default router;

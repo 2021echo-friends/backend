@@ -5,7 +5,7 @@ const QuizSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Folder",
   },
-  file_counts: { type: number, default: 1 },
+  file_counts: { type: Number, default: 1 },
   question: { type: String, required: true },
   answer: { type: String, required: true },
   selections: { type: [String], required: true },
