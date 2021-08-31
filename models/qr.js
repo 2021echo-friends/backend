@@ -5,7 +5,6 @@ const QrSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
     required: true,
-    unique: true,
   },
   is_used: { type: Boolean, required: true, default: false },
 });

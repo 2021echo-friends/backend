@@ -27,11 +27,20 @@ export const createPointHistoryWithOthers = async (qr_id, user_id) => {
               "를 구매하여, \n" +
               product.point_value +
               "의 포인트를 획득, \n" +
-              "환경에 어느 부분에 " +
-              product.eco_value +
+              "이산화탄소는 " +
+              product.eco_value_co2 +
+              "L" +
+              "오존은 " +
+              product.eco_value_o3 +
+              "L" +
+              "메탄는 " +
+              product.eco_value_ch4 +
+              "L" +
               "만큼 좋은 영향을 주었습니다.",
             point_value: product.point_value,
-            eco_value: product.eco_value,
+            eco_value_co2: product.eco_value_co2,
+            eco_value_o3: product.eco_value_o3,
+            eco_value_ch4: product.eco_value_ch4,
           },
         ],
         { session }

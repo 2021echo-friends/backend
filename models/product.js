@@ -11,7 +11,9 @@ const ProductSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   description: { type: String, required: true },
   point_value: { type: Number, required: true },
-  eco_value: { type: Number, required: true, default: 10 },
+  eco_value_co2: { type: Number, required: true, default: 10 },
+  eco_value_o3: { type: Number, required: true, default: 10 },
+  eco_value_ch4: { type: Number, required: true, default: 10 },
   date_create: { type: Date, required: true, default: Date.now },
 });
 

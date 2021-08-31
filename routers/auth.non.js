@@ -39,4 +39,18 @@ router.post(
     return user;
   })
 );
+router.get(
+  "/file",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    //get media file
+  })
+);
+router.post(
+  "/file",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    //create media file
+  })
+);
 export default router;

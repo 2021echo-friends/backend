@@ -10,13 +10,17 @@ export const createProduct = async ({
   price,
   description,
   point_value,
-  eco_value,
+  eco_value_co2,
+  eco_value_o3,
+  eco_value_ch4,
 }) => {
   return await Product.create({
     name,
     price,
     description,
     point_value,
-    eco_value,
+    eco_value_co2,
+    eco_value_o3,
+    eco_value_ch4,
   });
 };

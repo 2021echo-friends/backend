@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const QuizSchema = new mongoose.Schema({
-  pircture_folder_id: {
+  picture_folder_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Folder",
   },

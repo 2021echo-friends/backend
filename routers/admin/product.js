@@ -21,13 +21,23 @@ router.post(
   "/",
   inputHandler({}),
   responseHandler(async (req) => {
-    const { name, price, description, point_value, eco_value } = req.body;
+    const {
+      name,
+      price,
+      description,
+      point_value,
+      eco_value_co2,
+      eco_value_o3,
+      eco_value_ch4,
+    } = req.body;
     return createProduct({
       name,
       price,
       description,
       point_value,
-      eco_value,
+      eco_value_co2,
+      eco_value_o3,
+      eco_value_ch4,
     });
   })
 );
