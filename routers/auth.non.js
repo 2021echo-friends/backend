@@ -7,22 +7,19 @@ import httpStatusCode from "http-status-codes";
 import { createUser, getToken } from "../controller/user.contoller.js";
 import {
   ErrorFromObject,
+  errorHandler,
   inputHandler,
   responseHandler,
 } from "../lib/common.js";
 import multer from "multer";
+import {
+  createFile,
+  createFolder,
+  getFile,
+} from "../controller/file.controller.js";
+import mongoose from "mongoose";
+import fs from "fs";
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "media/");
-    },
-    filename: function (req, file, cb) {
-      console.log(file);
-      cb(null, new Date().valueOf() + "_" + file.originalname);
-    },
-  }),
-});
 const router = Router();
 router.post(
   "/login",
@@ -52,18 +49,62 @@ router.post(
   })
 );
 
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "files/");
+    },
+    filename: async function (req, file, cb) {
+      const my_file = (
+        await createFile({
+          folder_id: req.folder_id,
+          name: file.originalname,
+          idx: req.idx,
+          session: req.session,
+        })
+      )[0];
+
+      console.log(file.originalname);
+      cb(null, my_file._id + my_file.extension);
+      req.idx++;
+    },
+  }),
+});
 router.get(
   "/file",
   inputHandler({}),
-  responseHandler(async (req) => {
-    //get media file (with foler_id)
+  errorHandler(async (req, res) => {
+    const { folder_id, idx } = req.query;
+    const file = await getFile({ folder_id, idx });
+    // res.setHeader("content-type",)
+    const stream = fs.createReadStream("files/" + file._id + file.extension);
+    stream.on("open", () => stream.pipe(res));
+    stream.on("error", (err) => {
+      throw new ErrorFromObject({
+        httpCode: httpStatusCode.StatusCodes.BAD_REQUEST,
+        error: err.toString(),
+      });
+    });
   })
 );
 router.post(
   "/file",
   inputHandler({}),
+  async (req, res, next) => {
+    req.session = await mongoose.startSession();
+    req.idx = 0;
+
+    const { counts, description } = req.query;
+    req.folder_id = (
+      await createFolder({ counts, description, session: req.session })
+    )[0]._id;
+    next();
+  },
+  inputHandler({}),
+  upload.array("files"),
   responseHandler(async (req) => {
-    //create media file -folder
+    console.log(req.files);
+    return req.folder_id;
   })
 );
 export default router;

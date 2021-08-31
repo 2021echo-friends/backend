@@ -5,7 +5,6 @@ const FileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Folder",
     required: true,
-    unique: true,
   },
   idx: { type: Number, required: true },
   extension: { type: String, required: true },
