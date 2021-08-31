@@ -10,6 +10,7 @@ import {
   inputHandler,
   responseHandler,
 } from "../lib/common.js";
+import multer from "multer";
 
 const router = Router();
 router.post(
@@ -39,18 +40,19 @@ router.post(
     return user;
   })
 );
+
 router.get(
   "/file",
   inputHandler({}),
   responseHandler(async (req) => {
-    //get media file
+    //get media file (with foler_id)
   })
 );
 router.post(
   "/file",
   inputHandler({}),
   responseHandler(async (req) => {
-    //create media file
+    //create media file -folder
   })
 );
 export default router;
