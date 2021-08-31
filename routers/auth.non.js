@@ -117,10 +117,11 @@ router.get(
     let co2 = 0,
       o3 = 0,
       ch4 = 0;
+    console.log(eco_effects);
     eco_effects.map((e) => {
-      co2 += e.eco_value_co2;
-      o3 += e.eco_value_o3;
-      ch4 += e.eco_value_ch4;
+      co2 += e.sum_effect_co2;
+      o3 += e.sum_effect_o3;
+      ch4 += e.sum_effect_ch4;
     });
     return { co2, o3, ch4 };
   })

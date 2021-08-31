@@ -11,6 +11,7 @@ const PostSchema = new mongoose.Schema({
   },
   body_file_counts: { type: Number, default: 1 },
   attachment_file_counts: { type: Number, default: 1 },
+  title: { type: String, required: true },
   body: { type: String, required: true },
   date_create: { type: Date, required: true, default: Date.now },
 });

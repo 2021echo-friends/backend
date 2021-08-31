@@ -11,6 +11,7 @@ router.post(
   inputHandler({}),
   responseHandler(async (req) => {
     const {
+      title,
       attachment_folder_id,
       body_folder_id,
       body_file_counts,
@@ -19,6 +20,7 @@ router.post(
     } = req.body;
 
     return createPost({
+      title,
       attachment_folder_id,
       body_folder_id,
       body_file_counts,

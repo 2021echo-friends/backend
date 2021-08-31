@@ -1,14 +1,18 @@
 import Post from "../models/post.js";
 
 export const createPost = async ({
+  title,
   attachment_folder_id,
   body_folder_id,
   body_file_counts,
   attachment_file_counts,
   body,
 }) => {
-  let post;
+  let post = {};
   // 애초에 프런트 쪽에서 html <img> 로 하고 붙여 넣을 때 event로 file 업로드하면 되는데
+  if (title) {
+    post.title = title;
+  }
   if (body) {
     post.body = body;
   }
@@ -31,5 +35,5 @@ export const getPost = async ({ cursor, per_page }) => {
   if (cursor) {
     filter = { ...FileReader, date_create: { $gte: Date(cursor) } };
   }
-  return await Post.find(filter).limit(per_page ? per_page : 5);
+  return await Post.find(filter).limit(per_page ? Number(per_page) : 5);
 };
