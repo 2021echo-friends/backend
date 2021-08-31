@@ -20,6 +20,7 @@ import {
 import mongoose from "mongoose";
 import fs from "fs";
 import { getEcoEffect } from "../controller/statistics.controller.js";
+import { getPost } from "../controller/post.controller.js";
 
 const router = Router();
 router.post(
@@ -129,6 +130,7 @@ router.get(
   inputHandler({}),
   responseHandler(async (req) => {
     const { cursor, per_page } = req.query;
+    return getPost({ cursor, per_page });
   })
 );
 export default router;
