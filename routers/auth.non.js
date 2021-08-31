@@ -12,6 +12,17 @@ import {
 } from "../lib/common.js";
 import multer from "multer";
 
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "media/");
+    },
+    filename: function (req, file, cb) {
+      console.log(file);
+      cb(null, new Date().valueOf() + "_" + file.originalname);
+    },
+  }),
+});
 const router = Router();
 router.post(
   "/login",
