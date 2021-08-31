@@ -5,7 +5,6 @@ import Product from "../models/product.js";
 import EcoEffect from "../models/eco_effect.js";
 import Coupon from "../models/coupon.js";
 import mongoose from "mongoose";
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react";
 
 export const createPointHistoryWithOthers = async (qr_id, user_id) => {
   const session = await mongoose.startSession();
