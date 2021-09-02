@@ -4,6 +4,7 @@ import EcoEffect from "../models/eco_effect.js";
 import jwt from "jsonwebtoken";
 import { SECRET } from "../config.js";
 import mongoose from "mongoose";
+import e from "express";
 export const getUser = async (email) => {
   return await User.findOne({ email });
 };
@@ -41,4 +42,10 @@ export const getUserWithOthers = async (user_id) => {
   const eco_effect = await EcoEffect.findOne({ user_id });
   // point_history
   return { point, eco_effect };
+};
+export const getUsersWithOthers = async () => {
+  const points = await Point.find({}).populate("user_id");
+  const ecoEffects = await EcoEffect.find({}).populate("user_id");
+
+  return { points, ecoEffects };
 };
