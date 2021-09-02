@@ -6,7 +6,6 @@ const ProductSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Folder",
     required: false,
-    unique: true,
   },
   file_counts: { type: Number, default: 1 },
   price: { type: Number, required: true },

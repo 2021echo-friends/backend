@@ -22,6 +22,7 @@ router.post(
   inputHandler({}),
   responseHandler(async (req) => {
     const {
+      thumnail_id,
       name,
       price,
       description,
@@ -31,6 +32,7 @@ router.post(
       eco_value_ch4,
     } = req.body;
     return createProduct({
+      thumnail_id,
       name,
       price,
       description,

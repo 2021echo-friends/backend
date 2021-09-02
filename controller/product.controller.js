@@ -6,6 +6,7 @@ export const readProduct = async () => {
 };
 
 export const createProduct = async ({
+  thumnail_id,
   name,
   price,
   description,
@@ -15,6 +16,7 @@ export const createProduct = async ({
   eco_value_ch4,
 }) => {
   return await Product.create({
+    thumnail_id,
     name,
     price,
     description,
