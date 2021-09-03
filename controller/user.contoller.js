@@ -24,7 +24,8 @@ export const createUser = async (
   email,
   password,
   user_type,
-  thumbnail_image_url
+  thumbnail_image_url,
+  nickname
 ) => {
   const session = await mongoose.startSession();
   let user;
@@ -32,9 +33,12 @@ export const createUser = async (
   let eco_effect;
   await session.withTransaction(async () => {
     user = (
-      await User.create([{ email, password, user_type, thumbnail_image_url }], {
-        session,
-      })
+      await User.create(
+        [{ email, password, user_type, thumbnail_image_url, nickname }],
+        {
+          session,
+        }
+      )
     )[0];
     point = (await Point.create([{ user_id: user._id }], { session }))[0];
     eco_effect = (

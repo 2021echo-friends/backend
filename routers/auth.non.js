@@ -47,13 +47,15 @@ router.post(
   "/join",
   inputHandler({}),
   responseHandler(async (req) => {
-    const { email, password, user_type, thumbnail_image_url } = req.body;
+    const { email, password, user_type, thumbnail_image_url, nickname } =
+      req.body;
     console.log("body ", req.body);
     const user = await createUser(
       email,
       password,
       user_type,
-      thumbnail_image_url
+      thumbnail_image_url,
+      nickname
     );
 
     return user;
@@ -184,9 +186,16 @@ router.post(
     const email = result.data.kakao_account.email;
     const thumbnail_image_url =
       result.data.kakao_account.profile.thumbnail_image_url;
+    const nickname = result.data.kakao_account.profile.nickname;
     const kakao_user = await getUser(email);
     if ((kakao_user == null) | !kakao_user) {
-      await createUser(email, "1234", USER_TYPE.CLIENT, thumbnail_image_url);
+      await createUser(
+        email,
+        "1234",
+        USER_TYPE.CLIENT,
+        thumbnail_image_url,
+        nickname
+      );
     }
 
     const token = await getToken(email, "1234");

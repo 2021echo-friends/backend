@@ -7,6 +7,7 @@ const PointSchema = new mongoose.Schema({
     required: true,
   },
   account: { type: Number, required: true, default: 0 },
+  used_account: { type: Number, required: true, default: 0 },
   date_create: { type: Date, required: true, default: Date.now },
 });
 

@@ -84,7 +84,12 @@ export const buyProduct = async (product_id, user_id) => {
     const product = await Product.findById(product_id);
     await Point.findOneAndUpdate(
       { user_id },
-      { $inc: { account: -product.point_value } },
+      {
+        $inc: {
+          account: -product.point_value,
+          used_account: product.point_value,
+        },
+      },
       { session }
     );
     await EcoEffect.findOneAndUpdate(
