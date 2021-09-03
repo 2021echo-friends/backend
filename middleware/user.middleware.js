@@ -33,6 +33,7 @@ export const DecodeMiddleware = async (req, res, next) => {
 };
 export const AuthenticationMiddleware = async (req, res, next) => {
   const user = await getUser(req.email);
+  console.log(user);
   if (user) {
     req.user = user;
   } else {

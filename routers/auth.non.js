@@ -3,7 +3,7 @@
 // 홈페이지에 들어갈 통계
 // 홈페이지의 행사 안내
 import { Router } from "express";
-import httpStatusCode from "http-status-codes";
+import httpStatusCode, { StatusCodes } from "http-status-codes";
 import { createUser, getToken } from "../controller/user.contoller.js";
 import {
   ErrorFromObject,
@@ -21,6 +21,9 @@ import mongoose from "mongoose";
 import fs from "fs";
 import { getEcoEffect } from "../controller/statistics.controller.js";
 import { getPost } from "../controller/post.controller.js";
+import { getUser } from "../controller/user.contoller.js";
+import axios from "axios";
+import { USER_TYPE } from "../lib/enums.js";
 
 const router = Router();
 router.post(
@@ -44,9 +47,15 @@ router.post(
   "/join",
   inputHandler({}),
   responseHandler(async (req) => {
-    const { email, password, user_type } = req.body;
+    const { email, password, user_type, thumbnail_image_url } = req.body;
     console.log("body ", req.body);
-    const user = await createUser(email, password, user_type);
+    const user = await createUser(
+      email,
+      password,
+      user_type,
+      thumbnail_image_url
+    );
+
     return user;
   })
 );
@@ -132,6 +141,63 @@ router.get(
   responseHandler(async (req) => {
     const { cursor, per_page } = req.query;
     return getPost({ cursor, per_page });
+  })
+);
+router.get(
+  "/test",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const { access_token } = req.query;
+
+    const result = await axios({
+      url: "https://kapi.kakao.com/v2/user/me",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    console.log(result.data);
+    return result.data;
+  })
+);
+router.post(
+  "/kakao_login",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const { access_token } = req.query;
+
+    const result = await axios({
+      url: "https://kapi.kakao.com/v2/user/me",
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    if (result.data.id == false) {
+      throw new ErrorFromObject({
+        httpCode: StatusCodes.BAD_REQUEST,
+        message:
+          "kakao로 부터 유저 정보를 받아올수없습니다. 잘못된 kakao access token 인 것 같습니다.",
+      });
+    }
+    console.log("dd ", result.data);
+    const email = result.data.kakao_account.email;
+    const thumbnail_image_url =
+      result.data.kakao_account.profile.thumbnail_image_url;
+    const kakao_user = await getUser(email);
+    if ((kakao_user == null) | !kakao_user) {
+      await createUser(email, "1234", USER_TYPE.CLIENT, thumbnail_image_url);
+    }
+
+    const token = await getToken(email, "1234");
+    if (token) {
+    } else {
+      throw new ErrorFromObject({
+        httpCode: httpStatusCode.StatusCodes.BAD_REQUEST,
+        error: "failed get token",
+      });
+    }
+    return { token };
   })
 );
 export default router;

@@ -20,14 +20,21 @@ export const getToken = async (email, password) => {
   }
   return null;
 };
-export const createUser = async (email, password, user_type) => {
+export const createUser = async (
+  email,
+  password,
+  user_type,
+  thumbnail_image_url
+) => {
   const session = await mongoose.startSession();
   let user;
   let point;
   let eco_effect;
   await session.withTransaction(async () => {
     user = (
-      await User.create([{ email, password, user_type }], { session })
+      await User.create([{ email, password, user_type, thumbnail_image_url }], {
+        session,
+      })
     )[0];
     point = (await Point.create([{ user_id: user._id }], { session }))[0];
     eco_effect = (
