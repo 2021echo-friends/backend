@@ -80,7 +80,7 @@ export const buyProduct = async (product_id, user_id) => {
   // eco_effect
   // coupon
   let coupon;
-  session.withTransaction(async () => {
+  await session.withTransaction(async () => {
     const product = await Product.findById(product_id);
     await Point.findOneAndUpdate(
       { user_id },
@@ -105,6 +105,6 @@ export const buyProduct = async (product_id, user_id) => {
     );
     coupon = await Coupon.create([{ product_id }], { session });
   });
-  session.endSession();
+  await session.endSession();
   return coupon;
 };
