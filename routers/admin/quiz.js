@@ -3,7 +3,11 @@
 // 퀴즈 삭제하기
 // 오늘의 출석 체크 퀴즈 결정하기 (자동으로 되도록 하는데 수동 변경 가능하도록)
 import { Router } from "express";
-import { createQuiz, getQuizAdmin } from "../../controller/quiz.controller.js";
+import {
+  createQuiz,
+  deleteQuiz,
+  getQuizAdmin,
+} from "../../controller/quiz.controller.js";
 import { inputHandler, responseHandler } from "../../lib/common.js";
 
 const router = Router();
@@ -23,5 +27,12 @@ router.post(
     return createQuiz({ picture_folder_id, question, answer, selections });
   })
 );
-
+router.delete(
+  "/",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const { quiz_id } = req.query;
+    return deleteQuiz(quiz_id);
+  })
+);
 export default router;

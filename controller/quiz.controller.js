@@ -46,3 +46,6 @@ export const createQuiz = async ({
     selections,
   });
 };
+export const deleteQuiz = async (quiz_id) => {
+  return await Quiz.findByIdAndDelete(quiz_id);
+};

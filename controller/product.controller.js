@@ -26,3 +26,6 @@ export const createProduct = async ({
     eco_value_ch4,
   });
 };
+export const deleteProduct = async (product_id) => {
+  return await Product.findByIdAndDelete(product_id);
+};

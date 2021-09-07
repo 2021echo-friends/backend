@@ -60,3 +60,7 @@ export const getUsersWithOthers = async () => {
 
   return { points, ecoEffects };
 };
+export const deleteUser = async (user_id) => {
+  // eco effect 등은 통계에 필요해서 남겨둠
+  return await User.findByIdAndDelete(user_id);
+};

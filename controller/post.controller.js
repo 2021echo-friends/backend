@@ -37,3 +37,6 @@ export const getPost = async ({ cursor, per_page }) => {
   }
   return await Post.find(filter).limit(per_page ? Number(per_page) : 5);
 };
+export const deletePost = async (post_id) => {
+  return await Post.findByIdAndDelete(post_id);
+};

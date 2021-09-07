@@ -4,6 +4,7 @@
 import { Router } from "express";
 import {
   createProduct,
+  deleteProduct,
   readProduct,
 } from "../../controller/product.controller.js";
 import { inputHandler, responseHandler } from "../../lib/common.js";
@@ -43,5 +44,12 @@ router.post(
     });
   })
 );
-
+router.delete(
+  "/",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const { product_id } = req.query;
+    return deleteProduct(product_id);
+  })
+);
 export default router;

@@ -3,7 +3,7 @@
 // 공지 삭제
 import { Router } from "express";
 import { inputHandler, responseHandler } from "../../lib/common.js";
-import { createPost } from "../../controller/post.controller.js";
+import { createPost, deletePost } from "../../controller/post.controller.js";
 const router = Router();
 
 router.post(
@@ -29,5 +29,12 @@ router.post(
     });
   })
 );
-
+router.delete(
+  "/",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    const { post_id } = req.body;
+    return deletePost(post_id);
+  })
+);
 export default router;
