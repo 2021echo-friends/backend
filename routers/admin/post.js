@@ -33,7 +33,7 @@ router.delete(
   "/",
   inputHandler({}),
   responseHandler(async (req) => {
-    const { post_id } = req.body;
+    const { post_id } = req.query;
     return deletePost(post_id);
   })
 );

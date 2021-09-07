@@ -40,7 +40,7 @@ export const createQuiz = async ({
   selections,
 }) => {
   return await Quiz.create({
-    /*picture_folder_id,*/
+    picture_folder_id,
     question,
     answer,
     selections,
