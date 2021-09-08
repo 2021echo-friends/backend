@@ -16,6 +16,7 @@ export const createPointHistoryWithOthers = async (qr_id, user_id) => {
   await session.withTransaction(async () => {
     qr = await Qr.findById(qr_id, null, { session });
     product = await Product.findById(qr.product_id, null, { session });
+    await Product.findByIdAndUpdate(qr.product_id, { $inc: { cnt: 1 } });
     point = await Point.findOne({ user_id }, null, { session });
     await Qr.findByIdAndUpdate(qr_id, { is_used: true }, { session });
     pointHistory = (
@@ -83,6 +84,7 @@ export const buyProduct = async (product_id, user_id) => {
   let coupon;
   await session.withTransaction(async () => {
     const product = await Product.findById(product_id);
+    await Product.findByIdAndUpdate(product_id, { $inc: { cnt: 1 } });
     const point = await Point.findOneAndUpdate(
       { user_id },
       {
