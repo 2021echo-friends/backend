@@ -33,7 +33,7 @@ export const createPost = async ({
 export const getPost = async ({ cursor, per_page }) => {
   let filter = {};
   if (cursor) {
-    filter = { ...FileReader, date_create: { $gte: Date(cursor) } };
+    filter = { ...filter, date_create: { $gte: Date(cursor) } };
   }
   return await Post.find(filter).limit(per_page ? Number(per_page) : 5);
 };
