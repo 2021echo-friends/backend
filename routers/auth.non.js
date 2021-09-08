@@ -22,6 +22,8 @@ import fs from "fs";
 import { getEcoEffect } from "../controller/statistics.controller.js";
 import { getPost } from "../controller/post.controller.js";
 import { getUser } from "../controller/user.contoller.js";
+
+import { getQuiz } from "../controller/quiz.controller.js";
 import axios from "axios";
 import { USER_TYPE } from "../lib/enums.js";
 
@@ -143,6 +145,13 @@ router.get(
   responseHandler(async (req) => {
     const { cursor, per_page } = req.query;
     return getPost({ cursor, per_page });
+  })
+);
+router.get(
+  "/quiz",
+  inputHandler({}),
+  responseHandler(async (req) => {
+    return getQuiz(req.query.len ? req.query.len : 0);
   })
 );
 router.get(

@@ -14,6 +14,10 @@ export const getQuiz = async (len) => {
       httpCode: httpStatusCode.StatusCodes.BAD_REQUEST,
     });
   }
+  if (len == 0) {
+    len = count;
+    return await Quiz.find({});
+  }
   const iter = new Array(Number(len)).fill(0);
   let idx = [];
   iter.map(() => {
